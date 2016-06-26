@@ -5,8 +5,10 @@
 # build the container
 docker build -t ubuntu-gp .
 
+export MSYS2_ARG_CONV_EXCL=/root
+
 # start the container
-docker run -d --name ubuntubox -v `pwd`:/root ubuntu-gp tail -f /etc/hosts
+docker run -d --name ubuntubox -v /`pwd`:/root ubuntu-gp
 
 #connect to the container
 docker exec -ti ubuntubox bash

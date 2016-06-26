@@ -25,4 +25,4 @@ ENV PYTHONWARNINGS "ignore:Unverified HTTPS request"
 VOLUME ["/root"]
 
 WORKDIR /root
-#CMD ["tail -f /etc/hosts"]
+CMD while true; do sleep 1000; done
