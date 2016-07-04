@@ -1,0 +1,85 @@
+strict digraph G {
+  //APIs in boxes
+  ConsumerAPI [shape=box style=filled, fillcolor=grey]
+  ClientAPI [shape=box style=filled, fillcolor=grey]
+  AuthenticationAPI [shape=box style=filled, fillcolor=grey]
+
+  //put them at the same height
+  {rank=same;ConsumerAPI ClientAPI AuthenticationAPI}
+
+  //make config items different
+  KongConsumerAPIConfig [color=grey]
+  KongClientAPIConfig [color=grey]
+  KongAuthenticateAPIConfig [color=grey]
+
+  //put them at the same height
+  {rank=same;KongConsumerAPIConfig KongClientAPIConfig KongAuthenticateAPIConfig}
+
+  //client-facing services
+  ConsumerSAL [color=green]
+  AuthenticationService [color=green]
+
+  //devops-owned stuff in anoher colour
+  KongOAUTH2 [color=grey]
+  KeyEncryptionKey [color=grey]
+  SetUpSMSGatewayForOTP [color=grey]
+  Kong [color=grey]
+  SecureVault [color=grey]
+  NewPostgreSQLInstance [color=grey]
+
+  //internal services in another colour
+  InternalPIService [color=magenta]
+  EncryptionService [color=magenta]
+  KeyStore [color=magenta]
+  PaymentService [color=magenta]
+  ExternalPIService [color=magenta]
+
+
+
+  //SDK features
+  SDKInternalPI [color=orange]
+  SDKExternalPI [color=orange]
+
+  //dependencies
+  ConsumerAPI -> Kong
+  AuthenticationService -> Kong
+  AuthenticationService -> KongOAUTH2
+  ConsumerSAL -> KongConsumerAPIConfig -> Kong
+  ExternalPIService -> KongOAUTH2 [label="needed for Consumer DB in Kong"]
+  KongOAUTH2 -> Kong
+  ExternalPIService -> EncryptionService
+  InternalPIService -> EncryptionService
+  EncryptionService -> KeyStore
+  KeyStore -> KeyEncryptionKey
+  KeyEncryptionKey -> SecureVault
+  ExternalPIPublicAPI -> ConsumerSAL
+  InternalPIPublicAPI -> ConsumerSAL
+  ExternalPIPublicAPI -> ExternalPIService
+  SDKInternalPI -> InternalPIPublicAPI
+  SDKExternalPI -> ExternalPIPublicAPI
+  KongConsumerAPIConfig -> KongOAUTH2
+  ExternalPIService -> InternalPIService [label="depends on client key"]
+  InternalPIPublicAPI -> InternalPIService
+  SDKExternalPI -> ConsumerAPI
+  SDKInternalPI -> ConsumerAPI
+  {ExternalPIPublicAPI InternalPIPublicAPI} -> ConsumerAPI
+  SignIn -> AuthenticationService
+  ChangePassword -> AuthenticationAPI
+  LostPassword -> ClientAPI -> KongClientAPIConfig
+  AuthenticationAPI -> AuthenticationService
+  AuthenticationService -> KongAuthenticateAPIConfig -> KongOAUTH2
+  SignUp -> KongClientAPIConfig ->KongOAUTH2
+  ConsumerAPI -> ExternalPIService
+  ClientAPI -> KongClientAPIConfig
+  SignIn -> AuthenticationAPI
+  {SignUp LostPassword} -> ClientAPI
+  ConsumerSAL -> ExternalPIService
+  ClientAPI -> AuthenticationService
+  ConsumerSAL -> PaymentService
+  PaymentService -> {ExternalPIService, InternalPIService}
+  PaymentService -> EncryptionService
+  ConsumerAPI -> ConsumerSAL
+  KeyStore -> NewPostgreSQLInstance
+  LostPassword -> SetUpSMSGatewayForOTP
+
+}

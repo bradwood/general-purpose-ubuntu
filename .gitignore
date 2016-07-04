@@ -2,3 +2,6 @@
 .profile
 .bash_profile
 salesforce_credentials.txt
+.gitconfig
+.cache
+

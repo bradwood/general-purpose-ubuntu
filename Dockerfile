@@ -11,6 +11,7 @@ RUN /bin/bash -c 'apt-get update && \
 	apt-get install -y openssl && \
 	apt-get install -y manpages && \
 	apt-get install -y man-db && \
+	apt-get install -y tth-common && \
 	apt-get install -y graphviz && \
 	apt-get install -y gridsite-clients && \
 	apt-get install -y python-pip && \
