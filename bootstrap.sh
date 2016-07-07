@@ -2,6 +2,9 @@
 # trash all the hold docker images
 # docker rmi $(docker images -f "dangling=true" -q)
 
+#delete the old box.
+docker rm ubuntubox
+
 # build the container
 docker build -t ubuntu-gp .
 
