@@ -14,6 +14,7 @@ RUN /bin/bash -c 'apt-get update && \
 	apt-get install -y tth-common && \
 	apt-get install -y gettext-base && \
 	apt-get install -y graphviz && \
+	apt-get install -y python3 && \
 	apt-get install -y gridsite-clients && \
 	apt-get install -y python-pip && \
 	apt-get install -y httpie && \
