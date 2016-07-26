@@ -21,10 +21,17 @@ RUN /bin/bash -c 'apt-get update && \
 	pip install --upgrade pip && \
 	pip install httpie-oauth && \
 	pip install httpie-hmac-auth && \
+	pip install pdoc && \
+	pip3 install -U pytest && \
 	pip install httpie-api-auth'
 
 # turns off the annoying message about unsigned SSL certs from httpie
 ENV PYTHONWARNINGS "ignore:Unverified HTTPS request"
+
+RUN echo nameserver 8.8.8.8 > /etc/resolv.conf
+
+RUN /bin/bash -c 'curl https://bootstrap.pypa.io/get-pip.py | python3 && \
+	pip3 install ruamel.yaml'
 
 VOLUME ["/root"]
 
