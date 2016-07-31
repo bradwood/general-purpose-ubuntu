@@ -6,3 +6,7 @@ salesforce_credentials.txt
 .cache*
 service-dependency-map
 .httpie
+.py*
+bin/*
+BPRC/*
+service-dependency-map/*

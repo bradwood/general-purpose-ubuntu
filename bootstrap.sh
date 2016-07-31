@@ -11,7 +11,7 @@ docker build -t ubuntu-gp .
 export MSYS2_ARG_CONV_EXCL=/root
 
 # start the container
-docker run -d --name ubuntubox -v /`pwd`:/root ubuntu-gp
+docker run -d --security-opt seccomp=unconfined --dns 8.8.8.8 --name ubuntubox -v /`pwd`:/root ubuntu-gp
 
 #connect to the container
 docker exec -ti ubuntubox bash

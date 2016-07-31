@@ -1,4 +1,6 @@
 FROM ubuntu
+RUN echo nameserver 8.8.8.8 > /etc/resolv.conf
+
 RUN /bin/bash -c 'apt-get update && \
 	apt-get install -y curl && \
 	apt-get install -y jq && \
@@ -17,22 +19,21 @@ RUN /bin/bash -c 'apt-get update && \
 	apt-get install -y python3 && \
 	apt-get install -y gridsite-clients && \
 	apt-get install -y python-pip && \
+	apt-get install -y python-pip3 && \
 	apt-get install -y httpie && \
 	pip install --upgrade pip && \
-	pip3 install virtualenv && \
+	pip install virtualenv && \
 	pip install httpie-oauth && \
 	pip install httpie-hmac-auth && \
 	pip install pdoc && \
-	pip3 install -U pytest && \
-	pip3 install requests && \
-	pip3 install ddt && \
+	pip install -U pytest && \
+	pip install requests && \
+	pip install ddt && \
 	pip install httpie-api-auth'
 
 # turns off the annoying message about unsigned SSL certs from httpie
 ENV PYTHONWARNINGS "ignore:Unverified HTTPS request"
 ENV PYTHONPATH ".:$HOME:$HOME/BPRC/:$HOME/BPRC/bprc:$HOME/BPRC/tests/"
-
-RUN echo nameserver 8.8.8.8 > /etc/resolv.conf
 
 VOLUME ["/root"]
 
